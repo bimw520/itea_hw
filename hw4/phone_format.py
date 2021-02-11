@@ -15,9 +15,9 @@ while True:
         if i.isdigit():
             tel += i
 
-    if a := re.search('[5-6,7,9]{1}[0,3,6,7]{1}[0-9]{7}', tel):
+    if a := re.search('[6,5,7,9]{1}[0,3,6,7]{1}[0-9]{7}', tel):
         print(f'380{a.group()}')
         break
     else:
-        print('Please check the prhone number an try again')
+        print('Please check the phone number and try again')
         continue
