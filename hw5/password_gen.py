@@ -21,77 +21,75 @@
         - программа генерирует пароль из нужной длины из введенных символов
         - * игнорируются пробелы
 """  # noqa: E501
-
 from random import choice, randint
 import string
-# import re
 
 
 def main():
-    stage_pass = int(input(
-        "\tМЕНЮ\n"
-    "1. Сгенерировать простой пароль\n"
-    "2. Сгенерировать средний пароль\n"
-    "3. Сгенерировать сложный пароль\n"
-    "4. Генерация своего пароля\n"
-    ))
-    if stage_pass == 1:
+    stage_pass = input(
+"\tМЕНЮ\n"
+"1. Сгенерировать простой пароль\n"
+"2. Сгенерировать средний пароль\n"
+"3. Сгенерировать сложный пароль\n"
+"4. Генерация своего пароля\n"
+    )
+
+    if stage_pass == '1':
+        _ = string.ascii_lowercase
+        len_pass = input('Введите длинну пароля: ')
+        len_pass = int(len_pass) if len_pass else 8
+        if len_pass <= 8:
+            print('len pass < 8 is not secure ')
+        test = genpasss(len_pass, _)
+
+    elif stage_pass == '2':
+        _ = string.ascii_letters + string.digits
+        len_pass = input('Введите длинну пароля: ')
+        len_pass = int(len_pass) if len_pass else 8
+        if len_pass <= 8:
+            print('len pass < 8 is not secure ')
+        test = genpasss(len_pass, _)
+
+    elif stage_pass == '3':
+        tmp = ''
+        space = litt = big = digit = punct = 0
+        _ = string.digits + string.ascii_letters + string.punctuation
         len_pass = randint(8, 16)
-        pass_bad = 0
-        # probleme with code
-        while pass_bad == 0:
-            test = genpasss(len_pass, stage_pass)
+        while True:
+            test = genpasss(len_pass, _)
             for i in test:
-                if i == i.isupper or i.islower or i.isdigit:
-                    pass_bad = 1
-            else:
-                pass_bad == 0
-                test = genpasss(len_pass, stage_pass)
-    elif stage_pass == 4:
+                tmp += i
+                if tmp.isspace():
+                    space += 1
+                elif i.islower():
+                    litt += 1
+                elif i.isupper():
+                    big += 1
+                elif i.isdigit():
+                    digit += 1
+                elif i in string.punctuation:
+                    punct += 1
+            if litt and big and digit and punct:
+                break
+
+    elif stage_pass == '4':
         self_pass = input('Введите свои символы для пароля: ')
         len_pass = int(input('Введите длинну пароля: '))
 
         for i in self_pass:
             if i == ' ':
                 i = i.string.replace(' ', '')
-        print(self_pass)
-        print(len_pass)
+        test = genpasss(len_pass, self_pass)
 
-        test = selfpass(len_pass, self_pass)
-        print(test)
-
-    else:
-        len_pass = int(input('Введите длинну пароля: '))
-        if len_pass <= 8:
-            print('len pass < 8 is not secure ')
-        test = genpasss(len_pass, stage_pass)
     print(test)
-    
 
-def selfpass(len_pass, self_pass):
+
+def genpasss(len_pass, _):
     tmp = ''
     while len_pass > 0:
-        tmp += choice(self_pass)
+        tmp += choice(_)
         len_pass -= 1
     return tmp
-
-
-def genpasss(len_pass, stage_pass):
-    tmp = ''
-    while len_pass > 0:
-        tmp += choice(lmh_pass(stage_pass))
-        len_pass -= 1
-    return tmp
-
-
-def lmh_pass(stage_pass):
-    if stage_pass == 1:
-        _ = string.ascii_lowercase
-    elif stage_pass == 2:
-        _ = string.ascii_letters + string.digits
-    elif stage_pass == 3:
-        _ = string.digits + string.punctuation # + string.ascii_letters
-    return _
 
 
 if __name__ == '__main__':

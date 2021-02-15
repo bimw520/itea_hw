@@ -42,10 +42,84 @@
     Ваш пароль: ********** (кол-во  == кол-ву символов пароля)
 
 """
+import string
 
 
 def main():
-    pass
+    print(
+        'Форма регистрации в базе!'
+    )
+    tel = reg_telefon()
+    email = reg_email()
+    passw = reg_pass()
+    encrypt_pass = encrypt(passw)
+    print(
+        'Поздравляем с успешной регистрацией!\n'
+        f'Ваш номер телефона: {tel}\n'
+        f'Ваш email: {email}\n'
+        f'Ваш пароль: {encrypt_pass}\n'
+    )
+
+
+def reg_telefon():
+    tel = ''
+    phone = input('Enter phone number: ')
+    for i in phone:
+        if i.isdigit():
+            tel += i
+    if len(tel) >= 9:
+        phone = '380' + phone[-9:]
+        return phone
+    else:
+        print('Wrong format.')
+        return reg_telefon()
+
+
+def reg_email():
+    email = input('Введите email: ')
+    if len(email) < 6:
+        print('Имейл меньше 6-ти символов')
+        return reg_email()
+    elif email.count('@') != 1:
+        print('проверьте правильность символа @')
+        return reg_email()
+    else:
+        return email
+
+
+def reg_pass():
+    tmp = ''
+    space = litt = big = digit = punct = 0
+    passw = input('Введите пароль: ')
+    for i in passw:
+        tmp += i
+        if tmp.isspace():
+            space += 1
+        elif i.islower():
+            litt += 1
+        elif i.isupper():
+            big += 1
+        elif i.isdigit():
+            digit += 1
+        elif i in string.punctuation:
+            punct += 1
+
+    if litt and big and digit and punct and len(passw) > 7:
+        return passw
+    else:
+        print('Пароль должен иметь цифру, большую букву,'
+        'маленькую и знак пунктуации')
+        space = litt = big = digit = 0
+        return reg_pass()
+
+
+def encrypt(passw):
+    tmp = ''
+    _ = len(passw)
+    while _ > 0:
+        tmp += '*'
+        _ -= 1
+    return tmp
 
 
 if __name__ == '__main__':
