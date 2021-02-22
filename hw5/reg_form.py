@@ -91,6 +91,7 @@ def reg_pass():
     tmp = ''
     space = litt = big = digit = punct = 0
     passw = input('Введите пароль: ')
+    #passw_repeat = 
     for i in passw:
         tmp += i
         if tmp.isspace():
