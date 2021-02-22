@@ -19,15 +19,3 @@
 # if __name__ == "__main__":
 #     main()
 
-from pathlib import Path
-path = Path(__file__).resolve().parent
-
-with open(path / "userpass.txt", "r") as f:
-    tmp = 'P0lkil012@'
-    chek = f.readlines()
-    
-    for i in chek:
-        print(i)
-        if i.startswith(tmp):
-            print('ALARM!!!')
-            break
