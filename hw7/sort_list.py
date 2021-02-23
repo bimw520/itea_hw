@@ -9,10 +9,8 @@
 
 
 def sort_ascending(x):
-    tmp = []
+    tmp = b = []
     y = 0
-    b = []
-    test = []
     for i in x:
         if i == -1:
             tmp.append(y)
@@ -24,8 +22,8 @@ def sort_ascending(x):
         b.insert(i, -1)
     return b
 
+
 t_1 = [-1, 150, 190, 170, -1, -1, 160, 180]
-#sort_ascending(t_1)
 assert sort_ascending(t_1) == [-1, 150, 160, 170, -1, -1, 180, 190]
 
 t_2 = [-1, -1, -1, -1, -1]
