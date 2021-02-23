@@ -9,8 +9,9 @@
 
 
 def sort_ascending(x):
-    tmp = b = []
+    tmp = []
     y = 0
+    b = []
     for i in x:
         if i == -1:
             tmp.append(y)
