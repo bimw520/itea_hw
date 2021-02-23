@@ -12,36 +12,32 @@ def sort_ascending(x):
     tmp = []
     y = 0
     b = []
-    print(x.index(150))
+    test = []
     for i in x:
-        if i != -1:
+        if i == -1:
+            tmp.append(y)
+        else:
             b.append(i)
-            y += 1
-            continue
         y += 1
-        tmp.append(y)
-    print(y, tmp)
-    print(b)
-    #b = sorted(b)
-    
-
-    
-
+    b = sorted(b)
+    for i in tmp:
+        b.insert(i, -1)
+    return b
 
 t_1 = [-1, 150, 190, 170, -1, -1, 160, 180]
-sort_ascending(t_1)
-# assert sort_ascending(t_1) == [-1, 150, 160, 170, -1, -1, 180, 190]
+#sort_ascending(t_1)
+assert sort_ascending(t_1) == [-1, 150, 160, 170, -1, -1, 180, 190]
 
-# t_2 = [-1, -1, -1, -1, -1]
-# assert sort_ascending(t_2) == [-1, -1, -1, -1, -1]
+t_2 = [-1, -1, -1, -1, -1]
+assert sort_ascending(t_2) == [-1, -1, -1, -1, -1]
 
-# t_3 = [4, 2, 9, 11, 2, 16]
-# assert sort_ascending(t_3) == [2, 2, 4, 9, 11, 16]
+t_3 = [4, 2, 9, 11, 2, 16]
+assert sort_ascending(t_3) == [2, 2, 4, 9, 11, 16]
 
-# t_4 = [23, 54, -1, 43, 1, -1, -1, 77, -1, -1, -1, 3]
-# assert sort_ascending(t_4) == [1, 3, -1, 23, 43, -1, -1, 54, -1, -1, -1, 77]
+t_4 = [23, 54, -1, 43, 1, -1, -1, 77, -1, -1, -1, 3]
+assert sort_ascending(t_4) == [1, 3, -1, 23, 43, -1, -1, 54, -1, -1, -1, 77]
 
-# t_5 = [-1]
-# assert sort_ascending(t_5) == [-1]
+t_5 = [-1]
+assert sort_ascending(t_5) == [-1]
 
-# print("All tests passed successfully!")
+print("All tests passed successfully!")
