@@ -21,10 +21,6 @@ import json
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent / 'practice'
-# data_test = [
-#      {'name': 'Anton', 'games': 0, 'record': 999, 'avg_attempts': 0},
-#      {'name': 'Max', 'games': 10, 'record': 5, 'avg_attempts': 2}
- ]
 
 
 def check_credential(name):
@@ -32,29 +28,34 @@ def check_credential(name):
         player_data = json.load(f)
         print(player_data)
         for i in player_data:
+            print(i)
             if i.get('name') == name:
                 return i
-            else:
-                data = write_credential(name)
-                return data
-        #         data = {'name': name, 'games': 0, 'record': 999, 'avg_attempts': 0}
-        #         return data
+        data = {'name': name, 'games': 0, 'record': 999, 'avg_attempts': 0}
+        return data
 
 
 def write_credential(name):
-    with open(BASE_DIR / "credential.json", "a") as f:
-        data = {'name': name, 'games': 0, 'record': 999, 'avg_attempts': 0}
-        data_new = json.dumps(data, indent=4)
-        print(data_new, type(data_new))
-        f.write(data_new)
-        return data_new
+    with open(BASE_DIR / "credential.json") as f:
+        data_new = json.load(f)
+        for i in data_new:
+            if i.get('name') == name.get('name'):
+                i.update(name)
+                break
+            else:
+                data_new.append(name)
+        print('test_write: ', data_new)
+    with open(BASE_DIR / "credential.json", 'w') as f:
+        data = json.dumps(data_new, indent=4)
+        f.write(data)
 
 
 name = input('Insert your name: ')
 
 player_data = check_credential(name)
-record = 0
-most_attemts = 0
+print(player_data, type(player_data))
+# record = 0
+# most_attemts = 0
 
 
 random_number = random.randint(1, 10)  # случайное число от 1 до 100
@@ -69,10 +70,6 @@ while True:
     except ValueError:
         print("You must enter a number.")
         continue
-    # if record > most_attemts:
-    #     most_attemts = record
-    # attempts = 0
-    # most_attemts = 0
 
     # сверяем введенное пользователем число со случайным
     if number > random_number:
@@ -82,17 +79,15 @@ while True:
     else:
         print("\nCongratulations! The Magic number is", number)
         print("Attempts:", counter)
+        player_data['avg_attempts'] = (player_data['games'] \
+        * player_data['avg_attempts'] + counter) \
+        / (player_data['games'] + 1)
         player_data['games'] += 1
-        print(player_data)
-        #player_data['avg_attempts'] 
         if counter < player_data['record']:
-            print('test_record')
             player_data['record'] = counter
-            print(player_data)
 
         if input("\nContinue? (y/n) ") != "y":
-            #write_credential()
-            print('test', player_data)
+            write_credential(player_data)
             print('Bye!')
             break
 
