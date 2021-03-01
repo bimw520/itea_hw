@@ -26,9 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent / 'practice'
 def check_credential(name):
     with open(BASE_DIR / 'credential.json', 'r') as f:
         player_data = json.load(f)
-        print(player_data)
         for i in player_data:
-            print(i)
             if i.get('name') == name:
                 return i
         data = {'name': name, 'games': 0, 'record': 999, 'avg_attempts': 0}
@@ -44,7 +42,6 @@ def write_credential(name):
                 break
             else:
                 data_new.append(name)
-        print('test_write: ', data_new)
     with open(BASE_DIR / "credential.json", 'w') as f:
         data = json.dumps(data_new, indent=4)
         f.write(data)
@@ -53,9 +50,6 @@ def write_credential(name):
 name = input('Insert your name: ')
 
 player_data = check_credential(name)
-print(player_data, type(player_data))
-# record = 0
-# most_attemts = 0
 
 
 random_number = random.randint(1, 10)  # случайное число от 1 до 100
