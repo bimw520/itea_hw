@@ -26,31 +26,28 @@ BASE_DIR = Path(__file__).resolve().parent / 'practice'
 def check_credential(name):
     with open(BASE_DIR / 'credential.json', 'r') as f:
         player_data = json.load(f)
-        for i in player_data:
-            if i.get('name') == name:
-                return i
-        data = {'name': name, 'games': 0, 'record': 999, 'avg_attempts': 0}
-        return data
+        data = next(filter(lambda x: x["name"] == name, player_data), None)
+        if data:
+            return data
+        data_new = {'name': name, 'games': 0, 'record': 999, 'avg_attempts': 0}
+        return data_new
 
 
-def write_credential(name):
+def write_credential(result_dict):
     with open(BASE_DIR / "credential.json") as f:
         data_new = json.load(f)
-        for i in data_new:
-            if i.get('name') == name.get('name'):
-                i.update(name)
-                break
-            else:
-                data_new.append(name)
+        temp = next(filter(lambda x: x["name"] == result_dict.get('name'), data_new), None)
+        if temp:
+            temp.update(result_dict)
+        else:
+            data_new.append(result_dict)
     with open(BASE_DIR / "credential.json", 'w') as f:
         data = json.dumps(data_new, indent=4)
         f.write(data)
 
 
 name = input('Insert your name: ')
-
 player_data = check_credential(name)
-
 
 random_number = random.randint(1, 10)  # случайное число от 1 до 100
 counter = 0  # счетчик попыток
@@ -89,4 +86,3 @@ while True:
         # генерируем новое число и сбрасываем счетчик попыток
         random_number = random.randint(1, 10)
         counter = 0
-
